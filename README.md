@@ -5,7 +5,7 @@ A Python package for finding the country of any point on earth offline.
 ## Installation
 
 ```bash
-pip install countryfinder
+pip install git+https://github.com/benoitdevrieze/countryfinder.git
 ```
 
 ## Quick Start
