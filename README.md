@@ -1,4 +1,4 @@
-# CountryFinder
+# countryfinder
 
 A Python package for finding the country of any point on earth offline.
 
