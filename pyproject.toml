@@ -1,0 +1,38 @@
+[project]
+name = "countryfinder"
+version = "0.0.1"
+description = "python package for finding the country of any point on earth offline"
+authors = [{name = "benoitdevrieze"}]
+license = {file="LICENSE"}
+readme = "README.md"
+keywords = ["country", "coordinates", "latitude", "longitude", "location", "offline", "polygon"]
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: GIS",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.32.5",
+    "geopandas>=1.0.0",
+    "pycountry>=24.6.1"
+]
+
+[project.urls]
+homepage = "https://github.com/benoitdevrieze/countryfinder"
+repository = "https://github.com/benoitdevrieze/countryfinder"
+documentation = "https://github.com/benoitdevrieze/countryfinder"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["countryfinder"]
