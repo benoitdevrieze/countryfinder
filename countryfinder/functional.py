@@ -3,7 +3,6 @@ from typing import overload
 from shapely.geometry.base import BaseGeometry
 
 from countryfinder.countryfinder import CountryFinder
-from countryfinder.typing import Country
 
 
 CF_INSTANCE: CountryFinder = None    # singleton
@@ -19,11 +18,11 @@ def _get_cf_instance() -> CountryFinder:
     return CF_INSTANCE
 
 
-def country_at(*, lng: float, lat: float) -> Country | None:
+def country_at(*, lng: float, lat: float) -> str | None:
     return _get_cf_instance().country_at(lng=lng, lat=lat)
 
 
-def country_by_geometry(geometry: BaseGeometry) -> Country | None:
+def country_by_geometry(geometry: BaseGeometry) -> str | None:
     return _get_cf_instance().country_by_geometry(geometry)
 
 

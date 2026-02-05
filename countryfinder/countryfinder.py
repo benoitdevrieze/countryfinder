@@ -7,13 +7,11 @@ import urllib.parse
 import requests
 
 import geopandas as gpd
-import pycountry
 
 from shapely.geometry import Point
 from shapely.geometry.base import BaseGeometry
 
 from countryfinder.config import DEFAULT_DATA_DIR
-from countryfinder.typing import Country
 
 
 
@@ -49,19 +47,16 @@ class CountryFinder(AbstractCountryFinder):
         cgaz_shapefile_path = self._download_cgaz_shapefile()
         self._boundaries = gpd.read_file(cgaz_shapefile_path).to_crs('EPSG:4326').set_index('shapeGroup')
 
-    def country_at(self, *, lng: float, lat: float) -> Country | None:
+    def country_at(self, *, lng: float, lat: float) -> str | None:
         return self.country_by_geometry(Point(lng, lat))
     
-    def country_by_geometry(self, geometry: BaseGeometry) -> Country | None:
+    def country_by_geometry(self, geometry: BaseGeometry) -> str | None:
         point = geometry.representative_point() # use representative point for speed
         results = self._boundaries[self._boundaries.geometry.contains(point)]
-        return pycountry.countries.get(alpha_3=results.index[0], default=None) if not results.empty else None
+        return results.index[0] if not results.empty else None
 
-    def get_geometry(self, **kwargs):
-        country: Country = pycountry.countries.get(kwargs, default=None)
-        if not country:
-            return None
-        self._boundaries.geometry.loc[country]
+    def get_geometry(self, *, alpha_3: str):
+        self._boundaries.geometry.loc[alpha_3]
 
     def _download_cgaz_shapefile(self) -> str:
 

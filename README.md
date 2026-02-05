@@ -16,8 +16,9 @@ pip install countryfinder
 from countryfinder import country_at, get_geometry
 
 # Find country at coordinates
-country = country_at(lng=4.3485, lat=50.8029)
-print(country.name)  # Belgium
+country_code = country_at(lng=4.3485, lat=50.8029)
+# Returns an ISO 3166-1 alpha-3 code
+print(country_code)  # BEL
 
 # Get country geometry
 geometry = get_geometry(alpha_3="BEL")
@@ -34,7 +35,8 @@ finder = CountryFinder()
 
 # Find country at coordinates
 country = finder.country_at(lng=4.3485, lat=50.8029)
-print(country.name)  # Belgium
+# Returns an ISO 3166-1 alpha-3 code
+print(country_code)  # BEL
 
 # Get country boundary geometry
 geometry = finder.get_geometry(alpha_3="BEL")
@@ -42,4 +44,4 @@ geometry = finder.get_geometry(alpha_3="BEL")
 
 ## References
 
-CountryFinder uses the [geoBoundaries](https://www.geoboundaries.org/) Comprehensive Global Administrative Zones (CGAZ) dataset, which provides simplified administrative boundaries for every country in the world. The data is automatically downloaded on first use. For country names, codes, and other metadata [pycountry](https://github.com/pycountry/pycountry) is used, which implements the ISO 3166-1 standard.
+CountryFinder uses the [geoBoundaries](https://www.geoboundaries.org/) Comprehensive Global Administrative Zones (CGAZ) dataset, which provides simplified administrative boundaries for every country in the world. The data is automatically downloaded on first use.

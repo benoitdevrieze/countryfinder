@@ -21,8 +21,7 @@ classifiers = [
 requires-python = ">=3.11"
 dependencies = [
     "requests>=2.32.5",
-    "geopandas>=1.0.0",
-    "pycountry>=24.6.1"
+    "geopandas>=1.0.0"
 ]
 
 [project.urls]
