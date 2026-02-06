@@ -11,39 +11,24 @@ import geopandas as gpd
 from shapely.geometry import Point
 from shapely.geometry.base import BaseGeometry
 
-from countryfinder.config import DEFAULT_DATA_DIR
+from countryfinder.config import DEFAULT_DATA_ROOT
 
 
 
-class AbstractCountryFinder(ABC):
-
-    def __init__(self, data_path: str | None = None):
-        super().__init__()
-        self._data_path = data_path if data_path is not None else DEFAULT_DATA_DIR
+class CountryFinderABC(ABC):
 
     @abstractmethod
     def country_at(self, *, lng: float, lat: float) -> str | None: ...
 
-    @overload
-    def get_geometry(self, *, alpha_2: str) -> BaseGeometry | None: ...
-
-    @overload
+    @abstractmethod
     def get_geometry(self, *, alpha_3: str) -> BaseGeometry | None: ...
 
-    @overload
-    def get_geometry(self, *, numeric: str) -> BaseGeometry | None: ...
 
-    @overload
-    def get_geometry(self, *, name: str) -> BaseGeometry | None: ...
+class CountryFinder(CountryFinderABC):
 
-    @abstractmethod
-    def get_geometry(self, **kwargs): ...
-
-
-class CountryFinder(AbstractCountryFinder):
-
-    def __init__(self, data_path: str | None = None):
-        super().__init__(data_path)
+    def __init__(self, data_root: str | None = None):
+        super().__init__()
+        self._data_root = data_root if data_root is not None else DEFAULT_DATA_ROOT
         cgaz_shapefile_path = self._download_cgaz_shapefile()
         self._boundaries = gpd.read_file(cgaz_shapefile_path).to_crs('EPSG:4326').set_index('shapeGroup')
 
@@ -61,9 +46,12 @@ class CountryFinder(AbstractCountryFinder):
     def _download_cgaz_shapefile(self) -> str:
 
         shapefile_url = 'https://github.com/wmgeolab/geoBoundaries/raw/refs/heads/main/releaseData/CGAZ/geoBoundariesCGAZ_ADM0.zip'
-        shapefile_path = os.path.join(self._data_path, os.path.basename(urllib.parse.urlparse(shapefile_url).path))
+        shapefile_path = os.path.join(self._data_root, os.path.basename(urllib.parse.urlparse(shapefile_url).path))
 
         if not os.path.exists(shapefile_path):
+
+            if not os.path.exists(self._data_root):
+                os.makedirs(self._data_root)
 
             response = requests.get(shapefile_url)
             with open(shapefile_path, "wb") as datafile:
