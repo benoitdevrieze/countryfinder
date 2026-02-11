@@ -54,7 +54,7 @@ class CountryFinder(CountryFinderABC):
         return self.get_subdivision_geometry(code) or self.get_country_geometry(code)
 
 
-    def get_subdivision_geometry(self, code: str):
+    def get_subdivision_geometry(self, code: str) -> BaseGeometry | None:
         if subdivision := pycountry.subdivisions.get(code=code):
             level = self._discover_subdivision_level(subdivision)
             boundaries = self._get_boundaries_by_name(f'ADM{level}')
@@ -62,7 +62,7 @@ class CountryFinder(CountryFinderABC):
         return None
         
 
-    def get_country_geometry(self, code: str):
+    def get_country_geometry(self, code: str) -> BaseGeometry | None:
         if country := pycountry.countries.get(alpha_2=code) or pycountry.countries.get(alpha_3=code) or pycountry.countries.get(numeric=code):
             boundaries = self._get_boundaries_by_code(f'ADM0')
             return boundaries.geometry.loc[country.alpha_3]

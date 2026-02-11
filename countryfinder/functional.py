@@ -28,3 +28,11 @@ def country_by_geometry(geometry: BaseGeometry) -> str | None:
 
 def get_geometry(code: str) -> BaseGeometry | None:
     return _get_cf_instance().get_geometry(code)
+
+
+def get_subdivision_geometry(code: str) -> BaseGeometry | None:
+    return _get_cf_instance().get_subdivision_geometry(code)
+
+
+def get_country_geometry(code: str) -> BaseGeometry | None:
+    return _get_cf_instance().get_country_geometry(code)
