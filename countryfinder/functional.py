@@ -26,17 +26,5 @@ def country_by_geometry(geometry: BaseGeometry) -> str | None:
     return _get_cf_instance().country_by_geometry(geometry)
 
 
-@overload
-def get_geometry(*, alpha_2: str) -> BaseGeometry | None: ...
-
-@overload
-def get_geometry(*, alpha_3: str) -> BaseGeometry | None: ...
-
-@overload
-def get_geometry(*, numeric: str | int) -> BaseGeometry | None: ...
-
-@overload
-def get_geometry(*, name: str) -> BaseGeometry | None: ...
-
-def get_geometry(**kwargs):
-    return _get_cf_instance().get_geometry(**kwargs)
+def get_geometry(code: str) -> BaseGeometry | None:
+    return _get_cf_instance().get_geometry(code)
